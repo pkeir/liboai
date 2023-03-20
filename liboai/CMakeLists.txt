@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(oai)
 
-find_package(nlohmann_json CONFIG REQUIRED)
-find_package(CURL CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED) # ensure json.hpp is available
+find_package(cpr CONFIG REQUIRED) # cpr: "no need to handle libcurl yourself"
 
 add_library(oai
 components/audio.cpp
@@ -24,10 +24,9 @@ core/response.cpp
 target_compile_features(oai PRIVATE cxx_std_17)
 
 target_link_libraries(oai PRIVATE cpr::cpr)
-target_link_libraries(oai PRIVATE CURL::libcurl)
 
 install(TARGETS oai DESTINATION lib)
-install(FILES liboai.h DESTINATION include)
+install(FILES liboai.h DESTINATION .)
 install(FILES
 include/components/audio.h
 include/components/chat.h
